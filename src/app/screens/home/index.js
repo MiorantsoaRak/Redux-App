@@ -1,2 +1,3 @@
 import Landing from "./Landing";
-export { Landing };
+import Handler from "./Handler";
+export { Landing, Handler };

@@ -196,6 +196,19 @@ class Services extends Component {
   /**
          * get token using Oauth code stored into AsynStorage
          */
+
+  async loginAPI(webViewState) {
+    try {
+      let OauthCode = await this.extractOauthCode(webViewState.url);
+      let tokenData = await this.getToken(OauthCode);
+      let token = response;
+      return this.getUserInfo(token).then(userInfo => {
+        return userInfo;
+      });
+    } catch (error) {
+      throw this.createError(response.error, "erreur during login");
+    }
+  }
   async getToken(oauthCode) {
     var url = configs.BASE_URL_Oauth + "oauth2/token";
     var formData = new FormData();

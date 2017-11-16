@@ -25,8 +25,11 @@ export function loginFromAPI(webviewState) {
   return dispatch => {
     dispatch(login());
     services.extractOauthCode(webviewState.url).then(oauthCode => {
+      console.log("***************");
+      console.log(oauthCode);
+      console.log("***************");
       services.getToken(oauthCode).then(token => {
-        dispatch(fetchUserData());
+        dispatch(fetchUserData(token));
         services
           .getUserInfo()
           .then(reponse => dispatch(fetchUserDataSuccess(reponse)))
