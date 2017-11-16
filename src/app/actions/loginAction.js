@@ -7,6 +7,35 @@ import {
 } from "../constants/login";
 
 import { emptyPeople } from "./actions";
+import {
+  fetchUserData,
+  fetchUserDataError,
+  fetchUserDataSuccess
+} from "./authentication";
+
+import {
+  FETCH_USER_DATA,
+  FETCH_USER_DATA_SUCCESS,
+  FETCH_USER_DATA_ERROR
+} from "../constants/authentication";
+import Services from "../services/services";
+
+const services = new Services();
+export function loginFromAPI(webviewState) {
+  return dispatch => {
+    dispatch(login());
+    services.extractOauthCode(webviewState.url).then(oauthCode => {
+      services.getToken(oauthCode).then(token => {
+        dispatch(fetchUserData());
+        services
+          .getUserInfo()
+          .then(reponse => dispatch(fetchUserDataSuccess(reponse)))
+          .catch(err => dispatch(fetchUserDataError()));
+      });
+    });
+  };
+}
+
 export function login() {
   return {
     type: LOGIN
