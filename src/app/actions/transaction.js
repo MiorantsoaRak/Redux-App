@@ -13,7 +13,9 @@ export function doTransactonToAPI(amount, senderId, currency, recipientId) {
     services
       .performTransation(amount, senderId, currency, recipientId)
       .then(response => dispatch(transactionSuccess(response)))
-      .catch(err => dispatch(transactionError()));
+      .catch(err =>
+        dispatch(transactionError("Soldes insuffisant(Hard coded)"))
+      );
   };
 }
 export function doTransaction() {

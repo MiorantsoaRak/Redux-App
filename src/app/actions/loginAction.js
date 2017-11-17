@@ -29,7 +29,6 @@ export function loginFromAPI(webviewState) {
       .loginAPI(webviewState)
       .then(userData => {
         dispatch(fetchUserDataSuccess(userData));
-        dispatch(NavigationActions.navigate({ routeName: "Pin" }));
       })
       .catch(err => dispatch(fetchUserDataError()));
   };

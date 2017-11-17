@@ -13,7 +13,7 @@ export function fetchSoldeFromAPI(accountId) {
     dispatch(fetchSolde());
     services
       .checkSolde(accountId)
-      .then(solde => dispatch(fetchSoldeSuccess()))
+      .then(solde => dispatch(fetchSoldeSuccess(solde)))
       .catch(err => dispatch(fetchSoldeError()));
   };
 }
