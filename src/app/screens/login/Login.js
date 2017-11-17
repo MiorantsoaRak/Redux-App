@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import data from "../../config/appConstants";
 import { loginFromAPI } from "../../actions/loginAction";
 import { Pin } from "./index";
+import { RegisterPin } from "../register/registerClient";
 
 // const { width, height } = Dimensions.get("window");
 const uri = data.uri;
@@ -100,7 +101,7 @@ class Login extends Component {
       );
     } else {
       console.log("Efa loggedIn le olona a");
-      return <Pin />;
+      return <RegisterPin navigation={this.props.navigation} />;
     }
   }
 }

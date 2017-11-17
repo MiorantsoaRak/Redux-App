@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import Landing from "./Landing";
 import { Pin } from "../login";
 import { connect } from "react-redux";
+import Drawer from "../../config/navigation/navigationClient/Drawer";
 
 // create a component
 class Handler extends Component {

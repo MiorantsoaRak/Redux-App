@@ -20,6 +20,7 @@ import { Container } from "../../../components/ContainerC";
 import { MyInput } from "../../../components/TextInput";
 import Services from "../../../services/services";
 import styles from "../../../styles/stylesC/registerStyles";
+import { connect } from "react-redux";
 
 // create a component
 const { width } = Dimensions.get("window");
@@ -47,6 +48,7 @@ class RegisterPin extends Component {
   };
 
   handlePinInput_2 = text => {
+    const { userData } = this.props.login;
     this.setState({ pin2: text });
     console.log("input 2 toggled");
     console.log("Toggle input2", this.state.pin1);
@@ -56,12 +58,8 @@ class RegisterPin extends Component {
         services = new Services();
         this.setState({ isLoading: true });
         services.saveData("pin", this.state.pin1).then(() => {
-          services.getData("user_id").then(userdata => {
-            user = JSON.parse(userdata);
-            this.setState({ isLoading: !this.state.isLoading });
-            console.log(userdata);
-            this.props.navigation.navigate("Drawer", user);
-          });
+          console.log(userData);
+          this.props.navigation.navigate("Drawer");
         });
       } else {
         console.log("Tsy mitovy");
@@ -154,4 +152,11 @@ class RegisterPin extends Component {
 }
 
 //make this component available to the app
-export default RegisterPin;
+function mapStateToProps(state) {
+  return {
+    login: state.login
+  };
+}
+
+//make this component available to the app
+export default connect(mapStateToProps)(RegisterPin);
