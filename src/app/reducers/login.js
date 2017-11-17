@@ -33,6 +33,7 @@ export default function loginReducer(state = initialState, action) {
       return {
         ...state,
         loggedIn: true,
+        error: false,
         processing: false,
         userData: action.data
       };

@@ -188,7 +188,7 @@ class Services extends Component {
      * @param {*} uri the url contains the Oauth Code 
      * then save this into storage
      */
-  async extractOauthCode(uri) {
+  extractOauthCode(uri) {
     let oauthCode = this.get(uri, "code");
     return oauthCode;
   }
@@ -199,7 +199,7 @@ class Services extends Component {
 
   async loginAPI(webViewState) {
     try {
-      let OauthCode = await this.extractOauthCode(webViewState.url);
+      let OauthCode = this.extractOauthCode(webViewState.url);
       let tokenData = await this.getToken(OauthCode);
       let token = response;
       return this.getUserInfo(token).then(userInfo => {
@@ -225,6 +225,9 @@ class Services extends Component {
     return (response = await fetch(url, data)
       .then(response => response.json())
       .then(responseJSON => {
+        console.log("=============Appelle dans getToken===============");
+        console.log(JSON.stringify(responseJSON));
+        console.log("============================");
         if (!responseJSON.error) {
           this.saveTokenData(responseJSON);
           return responseJSON.access_token;

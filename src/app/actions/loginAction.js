@@ -19,23 +19,19 @@ import {
   FETCH_USER_DATA_ERROR
 } from "../constants/authentication";
 import Services from "../services/services";
+import { NavigationActions } from "react-navigation";
 
 const services = new Services();
 export function loginFromAPI(webviewState) {
   return dispatch => {
-    dispatch(login());
-    services.extractOauthCode(webviewState.url).then(oauthCode => {
-      console.log("***************");
-      console.log(oauthCode);
-      console.log("***************");
-      services.getToken(oauthCode).then(token => {
-        dispatch(fetchUserData(token));
-        services
-          .getUserInfo()
-          .then(reponse => dispatch(fetchUserDataSuccess(reponse)))
-          .catch(err => dispatch(fetchUserDataError()));
-      });
-    });
+    dispatch(fetchUserData());
+    services
+      .loginAPI(webviewState)
+      .then(userData => {
+        dispatch(fetchUserDataSuccess(userData));
+        dispatch(NavigationActions.navigate({ routeName: "Pin" }));
+      })
+      .catch(err => dispatch(fetchUserDataError()));
   };
 }
 

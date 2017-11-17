@@ -15,6 +15,7 @@ import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 import data from "../../config/appConstants";
 import { loginFromAPI } from "../../actions/loginAction";
+import { Pin } from "./index";
 
 // const { width, height } = Dimensions.get("window");
 const uri = data.uri;
@@ -35,7 +36,7 @@ class Login extends Component {
 
   async _onNavigationStateChange(webViewState) {
     if (webViewState.url != uri) {
-      this.props.login(webViewState);
+      this.props.loginToApi(webViewState);
     }
   }
 
@@ -56,45 +57,51 @@ class Login extends Component {
       </View>
     );
     const { loggedIn, userData } = this.props.login;
-    console.log(this.props);
-    return (
-      <View style={styles.container}>
-        {loggedIn ? <Text>Vous êtes connécté</Text> : null}
-        <View style={{ flex: 1 }}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignContent: "center"
-            }}
-          >
-            <ActivityIndicator
-              animating={this.state.spinnerVisibility}
-              size="large"
-            />
-            <WebView
-              source={{ uri: uri }}
-              style={styles.webview}
-              onNavigationStateChange={this._onNavigationStateChange.bind(this)}
-              renderLoading={this.renderLoading}
-              onError={this.onErrorLoading.bind(this)}
-              renderError={() => this.webviewRenderError()}
-              startInLoadingState
-            />
-          </View>
-          <View style={styles.buttonContainer}>
-            <Button
-              title="Retour"
-              backgroundColor="transparent"
-              underlayColor="#000"
-              large
-              textStyle={styles.buttonText}
-              onPress={() => this.return()}
-            />
+    if (!loggedIn) {
+      return (
+        <View style={styles.container}>
+          {loggedIn ? <Text>Vous êtes connécté</Text> : null}
+          <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignContent: "center"
+              }}
+            >
+              <ActivityIndicator
+                animating={this.state.spinnerVisibility}
+                size="large"
+              />
+              <WebView
+                source={{ uri: uri }}
+                style={styles.webview}
+                onNavigationStateChange={this._onNavigationStateChange.bind(
+                  this
+                )}
+                renderLoading={this.renderLoading}
+                onError={this.onErrorLoading.bind(this)}
+                renderError={() => this.webviewRenderError()}
+                startInLoadingState
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                title="Retour"
+                backgroundColor="transparent"
+                underlayColor="#000"
+                large
+                textStyle={styles.buttonText}
+                onPress={() => this.return()}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    } else {
+      console.log("Efa loggedIn le olona a");
+      return <Pin />;
+    }
   }
 }
 
@@ -121,7 +128,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    login: webViewState => dispatch(loginFromAPI(webViewState))
+    loginToApi: webViewState => dispatch(loginFromAPI(webViewState))
   };
 }
 //make this component available to the app

@@ -13,15 +13,11 @@ class Handler extends Component {
   render() {
     const { loggedIn } = this.props.login;
     console.log(this.props, "Mba asehoy ty zavatra ty! :p");
-    return (
-      <View style={{ flex: 1 }}>
-        {loggedIn ? (
-          <Pin navigation={this.props.navigation} />
-        ) : (
-          <Landing navigation={this.props.navigation} />
-        )}
-      </View>
-    );
+    if (loggedIn) {
+      return <Pin navigation={this.props.navigation} />;
+    } else {
+      return <Landing navigation={this.props.navigation} />;
+    }
   }
 }
 
