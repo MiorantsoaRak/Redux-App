@@ -21,6 +21,7 @@ export default function soldeReducer(state = initialState, action) {
     case FETCH_SOLDE_SUCCESS:
       return {
         ...state,
+        error: false,
         isFetching: false,
         solde: action.data
       };

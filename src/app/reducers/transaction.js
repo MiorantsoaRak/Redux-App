@@ -7,6 +7,8 @@ import {
 const initialState = {
   processing: false,
   error: false,
+  done: false,
+  errorMessage: "",
   response: []
 };
 
@@ -15,6 +17,7 @@ export default function transactionReducer(state = initialState, action) {
     case TRANSACTION:
       return {
         ...state,
+        done: false,
         processing: true,
         response: []
       };
@@ -22,13 +25,15 @@ export default function transactionReducer(state = initialState, action) {
       return {
         ...state,
         processing: false,
+        done: true,
         response: action.data
       };
     case TRANSACTION_ERROR:
       return {
         ...state,
         processing: false,
-        error: true
+        error: true,
+        errorMessage: action.data
       };
     default:
       return state;
