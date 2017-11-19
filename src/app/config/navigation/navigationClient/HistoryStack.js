@@ -15,7 +15,7 @@ export default StackNavigator(
         headerStyle: headStyle.headerBackground,
         headerTitleStyle: headStyle.headerText,
         headerTintColor: "#fff",
-        headerRight: <HeaderRight action={() => console.log("Recherche")} />,
+        headerRight: <HeaderRight />,
         headerLeft: (
           <View
             style={{

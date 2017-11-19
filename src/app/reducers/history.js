@@ -3,7 +3,9 @@ import {
   FETCH_HISTORY_ERROR,
   FETCH_HISTORY_SUCCESS,
   FETCH_HISTORY_IN,
-  FETCH_HISTORY_OUT
+  FETCH_HISTORY_OUT,
+  SHOW_SEARCH_BAR,
+  HIDE_SEARCH_BAR
 } from "../constants/transaction";
 
 import Services from "../services/history";
@@ -14,6 +16,7 @@ const initialState = {
   processing: false,
   done: false,
   error: false,
+  search: false,
   historyIn: [],
   historyOut: [],
   data: [],
@@ -27,6 +30,7 @@ export default function historyReducer(state = initialState, action) {
         ...state,
         done: false,
         processing: true,
+        search: false,
         data: [],
         history: [],
         historyIn: [],
@@ -38,6 +42,7 @@ export default function historyReducer(state = initialState, action) {
         ...state,
         processing: false,
         data: action.data,
+        search: false,
         done: true,
         history: action.data,
         historyIn: action.dataIn,
@@ -58,6 +63,17 @@ export default function historyReducer(state = initialState, action) {
         ...state,
         processing: false,
         error: true
+      };
+
+    case SHOW_SEARCH_BAR:
+      return {
+        ...state,
+        search: true
+      };
+    case HIDE_SEARCH_BAR:
+      return {
+        ...state,
+        search: false
       };
     default:
       return state;

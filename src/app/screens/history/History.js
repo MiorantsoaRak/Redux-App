@@ -37,9 +37,12 @@ import { connect } from "react-redux";
 import {
   fetchHistoryFromApi,
   fetchHistory,
+  fetchHistorySuccess,
   fetchHistoryIn,
   fetchHistoryOut,
-  fetchHistoryAll
+  fetchHistoryAll,
+  showSearchBar,
+  hideSearchBar
 } from "../../actions/history";
 // create a component
 
@@ -192,7 +195,7 @@ class History extends React.Component {
 
   _handleResults(results) {
     //Mila ovaina
-    this.setState({ data: this.parseHistoryData(results) });
+    this.props.searchHistory(results);
   }
 
   formatCurrencyAndAmount(currency, amount, senderId) {
@@ -372,7 +375,12 @@ class History extends React.Component {
     });
   };
   render() {
-    const { processing, done, error, data } = this.props.history;
+    const { processing, done, error, data, search } = this.props.history;
+    if (search) {
+      this.searchBar.show();
+    } else {
+      this.searchBar.hide();
+    }
     let historyData = this.parseHistoryData(data);
     console.log(history);
     let allActive = this.state.showAll
@@ -531,9 +539,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getHistory: accountId => dispatch(fetchHistoryFromApi(accountId)),
+    showSearchBar: () => dispatch(showSearchBar()),
+    hideSearchBar: () => dispatch(hideSearchBar()),
     getAllHistory: history => dispatch(fetchHistoryAll(history)),
     getSentHistory: () => dispatch(fetchHistoryOut()),
-    getReceivedHistory: () => dispatch(fetchHistoryIn())
+    getReceivedHistory: () => dispatch(fetchHistoryIn()),
+    searchHistory: results => dispatch(fetchHistorySuccess(results))
   };
 }
 //make this component available to the app

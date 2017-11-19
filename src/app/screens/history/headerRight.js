@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
+import { connect } from "./C:/Users/Miora/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-redux";
+import { showSearchBar } from "../../actions/history";
 
 // create a component
 class HeaderRight extends Component {
@@ -9,7 +11,7 @@ class HeaderRight extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this.props.action()}
+          onPress={() => this.props.showSearchBar()}
           activeOpacity={0.3}
         >
           <Icon
@@ -37,4 +39,17 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default HeaderRight;
+function mapStateToProps(state) {
+  return {
+    history: state.history
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    showSearchBar: () => {
+      dispatch(showSearchBar());
+    }
+  };
+}
+export default connect(mapDispatchToProps, mapDispatchToProps)(HeaderRight);
