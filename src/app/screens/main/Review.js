@@ -126,10 +126,7 @@ class Review extends Component {
 
   _hideMessage() {
     this.setState({ messageVisible: !this.state.messageVisible });
-    this.props.navigation.navigate("Drawer", {
-      user_id: this.state.user_id,
-      username: this.state.accountName
-    });
+    this.props.navigation.navigate("Drawer");
   }
   render() {
     const formatedAmount = Services.formatNumber(this.state.amount);

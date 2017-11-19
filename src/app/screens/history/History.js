@@ -37,8 +37,8 @@ import { connect } from "react-redux";
 import {
   fetchHistoryFromApi,
   fetchHistory,
-  fetchHistoryInAPI,
-  fetchHistoryOutAPI,
+  fetchHistoryIn,
+  fetchHistoryOut,
   fetchHistoryAll
 } from "../../actions/history";
 // create a component
@@ -51,9 +51,6 @@ class History extends React.Component {
       user_id: this.props.login.userData.code,
       accountName: this.props.login.userData.username,
       data: this.props.history.history,
-      dataIn: [],
-      dataOut: [],
-      dataAll: [],
       loading: true,
       refreshing: false,
       online: true,
@@ -77,6 +74,7 @@ class History extends React.Component {
   }
 
   reinitialiseData() {
+    const { data } = this.props.history;
     this.setState({
       data: this.parseHistoryData(this.state.data),
       extraMargin: null
@@ -133,27 +131,27 @@ class History extends React.Component {
     );
   }
 
-  setData(response) {
-    if (response.length == 0) {
-      this.createEmptyText();
-    } else {
-      hServices = new HistoryServices();
-      this.setState({
-        syncing: false,
-        loading: false,
-        refreshing: false,
-        dataBrute: response,
-        data: this.parseHistoryData(response),
-        dataAll: this.parseHistoryData(response),
-        dataIn: this.parseHistoryData(
-          hServices.getReceivedTransaction(response, this.state.user_id)
-        ),
-        dataOut: this.parseHistoryData(
-          hServices.getSentTransactionData(response, this.state.user_id)
-        )
-      });
-    }
-  }
+  // setData(response) {
+  //   if (response.length == 0) {
+  //     this.createEmptyText();
+  //   } else {
+  //     hServices = new HistoryServices();
+  //     this.setState({
+  //       syncing: false,
+  //       loading: false,
+  //       refreshing: false,
+  //       dataBrute: response,
+  //       data: this.parseHistoryData(response),
+  //       dataAll: this.parseHistoryData(response),
+  //       dataIn: this.parseHistoryData(
+  //         hServices.getReceivedTransaction(response, this.state.user_id)
+  //       ),
+  //       dataOut: this.parseHistoryData(
+  //         hServices.getSentTransactionData(response, this.state.user_id)
+  //       )
+  //     });
+  //   }
+  // }
 
   createEmptyText() {
     this.setState({
@@ -193,6 +191,7 @@ class History extends React.Component {
   }
 
   _handleResults(results) {
+    //Mila ovaina
     this.setState({ data: this.parseHistoryData(results) });
   }
 
@@ -357,8 +356,7 @@ class History extends React.Component {
     });
   };
   _getSentHistory = () => {
-    const { history } = this.props.history;
-    this.props.getSentHistory(history, this.state.user_id);
+    this.props.getSentHistory();
     this.setState({
       showAll: false,
       showIn: false,
@@ -366,8 +364,7 @@ class History extends React.Component {
     });
   };
   _getReceivedHistory = () => {
-    const { history } = this.props.history;
-    this.props.getReceivedHistory(history, this.state.user_id);
+    this.props.getReceivedHistory();
     this.setState({
       showAll: false,
       showIn: true,
@@ -535,10 +532,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getHistory: accountId => dispatch(fetchHistoryFromApi(accountId)),
     getAllHistory: history => dispatch(fetchHistoryAll(history)),
-    getSentHistory: (history, accountId) =>
-      dispatch(fetchHistoryOutAPI(history, accountId)),
-    getReceivedHistory: (history, accountId) =>
-      dispatch(fetchHistoryInAPI(history, accountId))
+    getSentHistory: () => dispatch(fetchHistoryOut()),
+    getReceivedHistory: () => dispatch(fetchHistoryIn())
   };
 }
 //make this component available to the app

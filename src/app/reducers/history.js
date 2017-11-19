@@ -39,19 +39,19 @@ export default function historyReducer(state = initialState, action) {
         processing: false,
         data: action.data,
         done: true,
-        history: action.data
+        history: action.data,
+        historyIn: action.dataIn,
+        historyOut: action.dataOut
       };
     case FETCH_HISTORY_IN:
       return {
         ...state,
-        data: action.data,
-        historyIn: action.data
+        data: state.historyIn
       };
     case FETCH_HISTORY_OUT:
       return {
         ...state,
-        data: action.data,
-        historyOut: action.data
+        data: state.historyOut
       };
     case FETCH_HISTORY_ERROR:
       return {

@@ -15,16 +15,15 @@ export function fetchHistoryFromApi(accountId) {
     services
       .getHistory(accountId)
       .then(history => {
-        dispatch(fetchHistorySuccess(history));
+        dispatch(
+          fetchHistorySuccess(
+            history,
+            services.getReceivedTransaction(history, accountId),
+            services.getSentTransactionData(history, accountId)
+          )
+        );
       })
       .catch(err => dispatch(fetchHistoryError()));
-  };
-}
-
-export function fetchHistoryInAPI(history, accountId) {
-  return dispatch => {
-    let historyIn = services.getReceivedTransaction(history, accountId);
-    dispatch(fetchHistoryIn(historyIn));
   };
 }
 
@@ -34,35 +33,29 @@ export function fetchHistoryAll(history) {
   };
 }
 
-export function fetchHistoryOutAPI(history, accountId) {
-  return dispatch => {
-    let historyOut = services.getSentTransactionData(history, accountId);
-    dispatch(fetchHistoryOut(historyOut));
-  };
-}
 export function fetchHistory() {
   return {
     type: FETCH_HISTORY
   };
 }
 
-export function fetchHistoryIn(data) {
+export function fetchHistoryIn() {
   return {
-    type: FETCH_HISTORY_IN,
-    data
+    type: FETCH_HISTORY_IN
   };
 }
 
-export function fetchHistoryOut(data) {
+export function fetchHistoryOut() {
   return {
-    type: FETCH_HISTORY_OUT,
-    data
+    type: FETCH_HISTORY_OUT
   };
 }
-export function fetchHistorySuccess(data) {
+export function fetchHistorySuccess(data, dataIn, dataOut) {
   return {
     type: FETCH_HISTORY_SUCCESS,
-    data
+    data,
+    dataIn,
+    dataOut
   };
 }
 export function fetchHistoryError() {
