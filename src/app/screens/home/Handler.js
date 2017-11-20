@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
 //make this component available to the app
 function mapStateToProps(state) {
   return {
-    login: state.login
+    login: state.login,
+    register: state.register
   };
 }
 
