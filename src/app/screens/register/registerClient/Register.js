@@ -34,7 +34,7 @@ class Register extends Component {
   }
 }
 
-//make this component available to the app
+
 function mapStateToProps(state) {
   return {
     register: state.register
