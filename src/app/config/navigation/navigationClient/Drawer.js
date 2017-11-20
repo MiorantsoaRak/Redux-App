@@ -15,6 +15,7 @@ import History from "./HistoryStack";
 
 import headStyle from "../../../styles/stylesC/headerStyle";
 import HeaderRight from "../../../screens/history/headerRight";
+import { Receive } from "../../../screens/receive/index";
 
 //make this component available to the app
 
@@ -36,6 +37,15 @@ export default DrawerNavigator(
         title: "Historique",
         drawerIcon: ({ tintColor }) => (
           <Icon name="ios-paper-outline" size={25} type="ionicon" />
+        )
+      })
+    },
+    Wallet: {
+      screen: Receive,
+      navigationOptions: ({ navigation }) => ({
+        title: "Recevoir",
+        drawerIcon: ({ tintColor }) => (
+          <Icon name="ios-cash-outline" size={25} type="ionicon" />
         )
       })
     }

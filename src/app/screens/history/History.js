@@ -376,13 +376,8 @@ class History extends React.Component {
   };
   render() {
     const { processing, done, error, data, search } = this.props.history;
-    if (search) {
-      this.searchBar.show();
-    } else {
-      this.searchBar.hide();
-    }
     let historyData = this.parseHistoryData(data);
-    console.log(history);
+    console.log(this.props.history);
     let allActive = this.state.showAll
       ? { tab: style.tabActive, text: style.tabTextActive }
       : { tab: {}, text: {} };
