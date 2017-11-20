@@ -458,5 +458,10 @@ class Services extends Component {
     if (results == null) return "";
     else return results[1];
   }
+
+  registerAnonyme(){
+    let uri = configs.ARIARY_BASE_URL +"/register0";
+    return fetch(uri, { method: "POST" });
+  }
 }
 export default Services;
