@@ -1,52 +1,49 @@
 //import liraries
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator
+} from "react-native";
 import { RoundedButton } from "../../../components/Buttons";
 import { Footer } from "../../../components/Footer";
 import styles from "../../../styles/stylesC/registerStyles";
+import { connect } from "react-redux";
+import { registerToAPI } from "../../../actions/register";
+import RegisterPin from "./RegisterPin";
 
 // create a component
 class Register extends Component {
   render() {
-    return (
-      <View style={{ backgroundColor: "#fff", flex: 1 }}>
-        <View style={{ flex: 0.3 }} />
-        <Image
-          style={styles.images}
-          source={require("../../../components/Logo/images/logo.png")}
-        />
-        <Footer>
-          <View style={[styles.containerWidth, { alignSelf: "center" }]}>
-            <Text style={[styles.text, { color: "#aaa" }]}>
-              Appuyer sur "Accepter et Continuer" pour continuer votre
-              inscription et accepter les
-            </Text>
-            <TouchableOpacity>
-              <View>
-                <Text
-                  style={[styles.text, styles.linkText, { marginBottom: 20 }]}
-                >
-                  Conditions d' utilisation de Ariary.net
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <RoundedButton
-              text="Accepter et Continuer"
-              buttonStyle={{ height: 40 }}
-              color="#1e9228"
-              buttonStyle={{
-                marginVertical: 15
-              }}
-              onPress={() => {
-                this.props.navigation.navigate("RegisterName");
-              }}
-            />
+    const { processing, error, registerResponse } = this.props.register;
+    if (processing) {
+      return (
+        <View style={{ backgroundColor: "#fff", flex: 1 }}>
+          <View style={{ flex: 0.3 }} />
+          <View>
+            <ActivityIndicator animating={processing} />
           </View>
-        </Footer>
-      </View>
-    );
+        </View>
+      );
+    } else {
+      return <RegisterPin navigation={this.props.navigation} />;
+    }
   }
 }
 
 //make this component available to the app
+function mapStateToProps(state) {
+  return {
+    register: state.register
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    registerUser: () => dispatch(registerToAPI())
+  };
+}
 export default Register;

@@ -21,6 +21,8 @@ import { Login } from "../login";
 import styles from "../../styles/starterStyles";
 import styleBase from "../../styles/styles";
 import moment from "moment";
+import { connect } from "react-redux";
+import { registerToAPI } from "../../actions/register";
 
 const background = require("../../images/back3.jpg");
 const mark = require("../../images/icons/logo-pro.png");

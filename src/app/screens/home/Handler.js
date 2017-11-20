@@ -5,6 +5,7 @@ import Landing from "./Landing";
 import { Pin } from "../login";
 import { connect } from "react-redux";
 import Drawer from "../../config/navigation/navigationClient/Drawer";
+import { registerToAPI } from "../../actions/register";
 
 // create a component
 class Handler extends Component {

@@ -7,7 +7,10 @@ import DropdownAlert from "react-native-dropdownalert";
 import Landing from "../../../screens/home/Landing";
 import { Login, Pin } from "../../../screens/login";
 import { Handler } from "../../../screens/home";
-import { RegisterPin } from "../../../screens/register/registerClient";
+import {
+  RegisterPin,
+  Register
+} from "../../../screens/register/registerClient";
 import Drawer from "./Drawer";
 
 // create a component
@@ -50,6 +53,13 @@ const MainNavigator = new StackNavigator(
 
     RegisterPin: {
       screen: RegisterPin,
+      navigationOptions: ({ navigation }) => ({
+        header: () => null,
+        headerTitle: "Register Pin"
+      })
+    },
+    Register: {
+      screen: Register,
       navigationOptions: ({ navigation }) => ({
         header: () => null,
         headerTitle: "Register Pin"
