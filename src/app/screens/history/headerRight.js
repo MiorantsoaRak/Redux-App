@@ -47,9 +47,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    showSearchBar: () => {
-      dispatch(showSearchBar());
-    }
+    showSearchBar: () => dispatch(showSearchBar())
   };
 }
 export default connect(mapDispatchToProps, mapDispatchToProps)(HeaderRight);
